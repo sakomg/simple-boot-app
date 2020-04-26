@@ -1,19 +1,21 @@
 package by.komegunov.simplebootapp.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "products")
 public class Product {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "title")
     private String title;
+    @Column(name = "price")
     private int price;
 
-    public Product(){
+    public Product() {
     }
 
     public Product(Long id, String title, int price) {
@@ -44,5 +46,10 @@ public class Product {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Product [id = %d, title = %t, price = %p]", id, title, price);
     }
 }
