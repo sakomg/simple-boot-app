@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8"/>
@@ -17,7 +17,7 @@
 <div class="container">
     <div th:replace="~{navigation :: navigation(Shop)}"></div>
 
-    <h1>Shopping cart</h1>
+    <h1>Shop</h1>
 
     <span th:if = "${products.size() == 0}">Product List is Empty</span>
     <table th:if = "${products.size() > 0}" class="table table-hover">
@@ -38,7 +38,7 @@
             <td th:text="${product.price}"></td>
             <td><a class = "btn btn-secondary" th:href="@{'/details/' + ${product.id}}">Details</a></td>
             <td><a class = "btn btn-success" th:href="@{'/cart/add/' + ${product.id}}">Add to Cart</a></td>
-            <td><a class = "btn btn-danger" th:href="@{'/products/delete/' + ${product.id}}">Delete</a></td>
+            <td sec:authorize="hasRole('ADMIN')"><a class = "btn btn-danger" th:href="@{'/products/delete/' + ${product.id}}">Delete</a></td>
         </tr>
         </tbody>
     </table>

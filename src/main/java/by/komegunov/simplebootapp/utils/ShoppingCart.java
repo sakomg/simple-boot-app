@@ -1,5 +1,7 @@
 package by.komegunov.simplebootapp.utils;
 
+import by.komegunov.simplebootapp.entities.Order;
+import by.komegunov.simplebootapp.entities.OrderItem;
 import by.komegunov.simplebootapp.entities.Product;
 import by.komegunov.simplebootapp.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import java.util.List;
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode =  ScopedProxyMode.TARGET_CLASS)
 public class ShoppingCart {
-    private List<Product> productList;
+    private List<OrderItem> items;
 
     private ProductService productService;
 
@@ -24,17 +26,19 @@ public class ShoppingCart {
         this.productService = productService;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public List<OrderItem> getItems() {
+        return items;
     }
 
     @PostConstruct
     public void init() {
-        productList = new ArrayList<>();
+        items = new ArrayList<>();
     }
 
     public void addProductById(Long id) {
         Product product = productService.getProductById(id);
-        productList.add(product);
+        OrderItem orderItem = new OrderItem();
+        orderItem.setProduct(product);
+        items.add(orderItem);
     }
 }
